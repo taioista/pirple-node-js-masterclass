@@ -1,16 +1,17 @@
 /*
 * Primary file for the API
 *
-*
 */
 
 //Dependencies
 var http = require('http');
 var https = require('https');
 var url = require('url');
-var config = require('./config');
+var config = require('./lib/config');
 var StringDecoder = require('string_decoder').StringDecoder;
 var fs = require('fs');
+var handlers = require('./lib/handlers');
+var helpers = require('./lib/helpers');
 
 // Instantiate the HTTP server
 var httpServer = http.createServer(function(req, res) {
@@ -72,7 +73,7 @@ var unifiedServer = function(req, res) {
             'queryStringObject' : queryStringObject,
             'method' : method,
             'headers' : headers,
-            'payload' : buffer
+            'payload' : helpers.parseJsonToObject(buffer)
         };
 
         // Route the request to the handler especify in the router
@@ -97,21 +98,8 @@ var unifiedServer = function(req, res) {
     });
 };
 
-// Define the handlers
-var handlers = {};
-
-// Sample handler
-handlers.sample = function(data, callback) {
-    // Callback a http status code, and a payload object
-    callback(406, {'name' : 'sample handler'});
-};
-
-// Not found handler
-handlers.notFound = function(data, callback) {
-    callback(404);
-};
-
 // Define a request router
 var router = {
-    'sample' : handlers.sample
+    'ping' : handlers.ping,
+    'users' : handlers.users
 };
