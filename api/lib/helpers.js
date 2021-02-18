@@ -54,7 +54,7 @@ helpers.createRandomString = function(strLength) {
     } else {
         return false;
     }
-}
+};
 
 // Send an SMS message via Twilio
 helpers.sendTwilioSms = function(phone, msg, callback) {
@@ -81,7 +81,7 @@ helpers.sendTwilioSms = function(phone, msg, callback) {
             'path' : '/2010-04-01/Accounts/'+config.twilio.accountSid+'/Messages.json',
             'auth' : config.twilio.accountSid+':'+config.twilio.authToken,
             'headers' : {
-                'Content-Type' : 'application/x-ww-form-urlencoded',
+                'Content-Type' : 'application/x-www-form-urlencoded',
                 'Content-Length' : Buffer.byteLength(stringPayload)
             }
          };
